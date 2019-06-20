@@ -1,0 +1,48 @@
+body {
+  margin: 0 0;
+  width: 100%;
+}
+
+#wrap {
+  width: 50%;
+  height: 100vh;
+  margin: 0 auto;
+}
+
+
+#output {
+  height: 80vh;
+  overflow: scroll;
+}
+
+#form {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  position: absolute;
+  bottom: 0;
+}
+input#handle {
+  border: none;
+}
+
+input {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid;
+  margin-bottom: 10px;
+  outline: none;
+}
+
+button#send {
+  width: 20%;
+  padding: 10px;
+  background: border-box;
+  border: none;
+  box-shadow: 0 3px 4px #bbbaba;
+  border-radius: 5px;
+  font-size: 20px;
+  display: block;
+  float: right;
+  cursor: pointer;
+}
