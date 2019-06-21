@@ -8,6 +8,7 @@ p#output {
   font-size: 20px;
   font-family: monospace;
   text-align: justify;
+  margin: 0;
 }
 
 strong {
@@ -34,17 +35,18 @@ em {
 
 
 #output {
-  height: 80vh;
   overflow: scroll;
-  padding: 10px;
+  padding: 5px;
 }
 
 #form {
   display: flex;
   flex-direction: column;
-  width: 90%;
   bottom: 20px;
   margin: 0 auto;
+  position: absolute;
+  width: 48%;
+  left: 26%;
 }
 
 input {
