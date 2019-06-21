@@ -11,6 +11,11 @@ p#output {
   margin: 0;
 }
 
+.chat-wrap {
+  height: 75vh;
+  overflow: scroll;
+}
+
 strong {
   color: red;
 }

@@ -1,5 +1,5 @@
 // make connection
-const socket = io.connect('http://localhost:8000');
+const socket = io.connect(['http://localhost:8000', 'https://30e08c80.ngrok.io', 'http://30e08c80.ngrok.io']);
 
 // 'http://66f04576.ngrok.io', 'https://66f04576.ngrok.io']
 // query the dom
