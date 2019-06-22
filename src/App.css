@@ -11,6 +11,10 @@ p#output {
   margin: 0;
 }
 
+p {
+  margin: 0;
+}
+
 .chat-wrap {
   height: 75vh;
   overflow: scroll;
@@ -49,9 +53,7 @@ em {
   flex-direction: column;
   bottom: 20px;
   margin: 0 auto;
-  position: absolute;
-  width: 48%;
-  left: 26%;
+  width: 95%;
 }
 
 input {
@@ -67,8 +69,8 @@ input {
 }
 
 button {
-  width: 20%;
-  padding: 10px;
+  width: 30%;
+  padding: 10px 20px;
   background: border-box;
   border: none;
   font-weight: 900;
@@ -80,4 +82,25 @@ button {
   float: right;
   cursor: pointer;
   outline: none;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+#feedback {
+  height: 25px;
+  padding: 0 18px;
+}
+
+@media screen and (max-width: 480px) {
+  #wrap {
+    width: 100%;
+    margin: 0;
+    position: 0;
+  }
+
+  #form {
+    width: 95%;
+  }
 }
