@@ -18,6 +18,7 @@ class ChatInterface extends Component {
       };
     
       componentDidMount() {
+        this.checkUserName();
         socket.on('chat', resp => {
           this.setState({
             chatHistory: this.state.chatHistory.concat([resp]),
@@ -50,6 +51,13 @@ class ChatInterface extends Component {
           <p><strong>{`${chat.username}:`}</strong> {chat.message} </p>
         </div>
       )
+      
+      checkUserName = () => {
+          const { username } = this.state;
+          if (!username) {
+            this.props.history.push('/')
+          } 
+      }
     
     
       render() {
