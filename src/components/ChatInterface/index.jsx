@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import io from "socket.io-client";
 
-const socket = io.connect("https://chaty-back.herokuapp.com/"); 
-
 
 class ChatInterface extends Component {
     constructor(props) {
@@ -12,11 +10,19 @@ class ChatInterface extends Component {
           chatHistory: [],
           userTyping: '',
           isTyping: false,
+          socket: io(`https://chaty-back.herokuapp.com/`),
         };
       };
     
       componentDidMount() {
-        this.checkUserName();
+        const { socket } = this.state;
+        const { username } = this.props;
+        const pathName = this.props.history.location.pathname
+        socket.emit('join', { username, pathName })
+        socket.on('join', resp => {
+          this.setState({ chatHistory: this.state.chatHistory.concat({join: `${resp.username} has just joined`}) })
+        });
+
         socket.on('chat', resp => {
           this.setState({
             chatHistory: this.state.chatHistory.concat([resp]),
@@ -30,6 +36,7 @@ class ChatInterface extends Component {
       }
     
       handleTyping = () => {
+        const { socket } = this.state;
         const { username } = this.props;
         socket.emit('typing', username);
         socket.on('typing', data => this.setState({ isTyping: true, userTyping: data }));
@@ -37,8 +44,8 @@ class ChatInterface extends Component {
     
       submitForm = e => {
         e.preventDefault();
+        const { message, socket } = this.state;
         const { username } = this.props;
-        const { message } = this.state;
         const data = { username, message };
         socket.emit('chat', data);
         this.setState({ message:  ''})
@@ -47,16 +54,9 @@ class ChatInterface extends Component {
     
       renderChat = (chat, chatHistory) => (
         <div id="output" key={chatHistory.length += 1}>
-          <p><strong>{`${chat.username}:`}</strong> {chat.message} </p>
+         {chat.join ? chat.join : <p><strong>{`${chat.username}:`}</strong> {chat.message} </p> }
         </div>
       )
-      
-      checkUserName = () => {
-          const { username } = this.props;
-          if (!username) {
-            this.props.history.push('/')
-          } 
-      }
     
     
       render() {

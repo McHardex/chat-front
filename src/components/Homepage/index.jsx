@@ -3,8 +3,16 @@ import randomstring from 'randomstring';
 
 class Hompage extends Component {
     handleSubmit = (e) => {
+        const { handlePath, location } = this.props;
         e.preventDefault();
-        this.props.history.push(`/chat/${randomstring.generate(4)}`)
+        let path;
+        if (location.state) {
+            path = location.state.from.pathname
+        } else {
+            path = randomstring.generate(4);
+        }
+        handlePath(path);
+        this.props.history.push(`${path}`)
     }
 
     render() {
