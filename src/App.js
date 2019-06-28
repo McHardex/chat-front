@@ -8,18 +8,36 @@ import "./App.css";
 
 class App extends Component {
   state = {
-    username: null,
+    username: '',
+    path: '',
   }
   handleUserName = ({ target }) => {
-    this.setState({username: target.value})
+    this.setState({username: target.value })
+  }
+
+  handlePath = (path) => {
+    this.setState({ path })
   }
 
   render() {
     return (
       <Router>
         <Switch>
-        <Route  path="/chat/:chatId"  exact render={(props) => <ChatInterface {...props} username={this.state.username} />} />
-        <Route  path="/" exact render={(props) => <HomePage {...props} handleUserName={this.handleUserName}/>} />
+        <Route  
+          path="/chat/:chatId"  
+          exact render={(props) => <ChatInterface 
+          {...props} 
+          username={this.state.username}
+          path={this.state.path} />} 
+        />
+        <Route  
+          path="/" 
+          exact 
+          render={(props) => <HomePage 
+          {...props} 
+          handleUserName={this.handleUserName} 
+          handlePath={this.handlePath} />} 
+        />
         <Route  path="*" component={NotFoundPage}  />
         </Switch>
       </Router>

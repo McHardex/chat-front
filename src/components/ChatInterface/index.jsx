@@ -1,23 +1,23 @@
 import React, { Component } from "react";
 import io from "socket.io-client";
 
-const socket = io.connect("https://chaty-back.herokuapp.com/"); 
-
 
 class ChatInterface extends Component {
     constructor(props) {
         super(props);
-        const { username } = this.props;
+        const { username, path } = this.props;
         this.state = {
           username,
           message: '',
           chatHistory: [],
           userTyping: '',
           isTyping: false,
+          socket: io.connect(`https://chaty-back.herokuapp.com/${path}`),
         };
       };
     
       componentDidMount() {
+        const { socket } = this.state;
         socket.on('chat', resp => {
           this.setState({
             chatHistory: this.state.chatHistory.concat([resp]),
@@ -31,14 +31,14 @@ class ChatInterface extends Component {
       }
     
       handleTyping = () => {
-        const { username } = this.state;
+        const { username, socket } = this.state;
         socket.emit('typing', username);
         socket.on('typing', data => this.setState({ isTyping: true, userTyping: data }));
       }
     
       submitForm = e => {
         e.preventDefault();
-        const { username, message } = this.state;
+        const { username, message, socket } = this.state;
         const data = { username, message };
         socket.emit('chat', data);
         this.setState({ message:  ''})
