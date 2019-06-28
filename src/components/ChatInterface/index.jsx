@@ -5,9 +5,8 @@ import io from "socket.io-client";
 class ChatInterface extends Component {
     constructor(props) {
         super(props);
-        const { username, path } = this.props;
+        const { path } = this.props;
         this.state = {
-          username,
           message: '',
           chatHistory: [],
           userTyping: '',
@@ -18,6 +17,7 @@ class ChatInterface extends Component {
     
       componentDidMount() {
         const { socket } = this.state;
+        this.checkUserName();
         socket.on('chat', resp => {
           this.setState({
             chatHistory: this.state.chatHistory.concat([resp]),
@@ -31,14 +31,16 @@ class ChatInterface extends Component {
       }
     
       handleTyping = () => {
-        const { username, socket } = this.state;
+        const { socket } = this.state;
+        const { username } = this.props;
         socket.emit('typing', username);
         socket.on('typing', data => this.setState({ isTyping: true, userTyping: data }));
       }
     
       submitForm = e => {
         e.preventDefault();
-        const { username, message, socket } = this.state;
+        const { message, socket } = this.state;
+        const { username } = this.props;
         const data = { username, message };
         socket.emit('chat', data);
         this.setState({ message:  ''})
@@ -50,10 +52,18 @@ class ChatInterface extends Component {
           <p><strong>{`${chat.username}:`}</strong> {chat.message} </p>
         </div>
       )
+      
+      checkUserName = () => {
+          const { username } = this.props;
+          if (!username) {
+            this.props.history.push('/')
+          } 
+      }
     
     
       render() {
-        const { username, message, isTyping, chatHistory, userTyping } = this.state;
+        const { message, isTyping, chatHistory, userTyping } = this.state;
+        const { username } = this.props;
         return (
           <div id="wrap">
             <div className="chat-wrap">
