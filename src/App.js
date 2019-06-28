@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import ChatInterface from './components/ChatInterface';
 import NotFoundPage from './components/NotFoundPage';
 import HomePage from './components/Homepage';
+import ProtectedRoute from './components/ProtectedRoute';
 import "./App.css";
 
 
@@ -23,11 +24,13 @@ class App extends Component {
     return (
       <Router>
         <Switch>
-        <Route  
-          path="/chat/:chatId"  
-          exact render={(props) => <ChatInterface 
-          {...props} 
+        <ProtectedRoute  
+          path="/:id"  
+          exact 
           username={this.state.username}
+          render={props => <ChatInterface 
+          username={this.state.username}
+          {...props}
           path={this.state.path} />} 
         />
         <Route  
