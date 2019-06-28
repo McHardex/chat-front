@@ -7,9 +7,7 @@ const socket = io.connect("https://chaty-back.herokuapp.com/");
 class ChatInterface extends Component {
     constructor(props) {
         super(props);
-        const { username } = this.props;
         this.state = {
-          username,
           message: '',
           chatHistory: [],
           userTyping: '',
@@ -32,14 +30,15 @@ class ChatInterface extends Component {
       }
     
       handleTyping = () => {
-        const { username } = this.state;
+        const { username } = this.props;
         socket.emit('typing', username);
         socket.on('typing', data => this.setState({ isTyping: true, userTyping: data }));
       }
     
       submitForm = e => {
         e.preventDefault();
-        const { username, message } = this.state;
+        const { username } = this.props;
+        const { message } = this.state;
         const data = { username, message };
         socket.emit('chat', data);
         this.setState({ message:  ''})
@@ -53,7 +52,7 @@ class ChatInterface extends Component {
       )
       
       checkUserName = () => {
-          const { username } = this.state;
+          const { username } = this.props;
           if (!username) {
             this.props.history.push('/')
           } 
@@ -61,7 +60,8 @@ class ChatInterface extends Component {
     
     
       render() {
-        const { username, message, isTyping, chatHistory, userTyping } = this.state;
+        const { message, isTyping, chatHistory, userTyping } = this.state;
+        const { username } = this.props;
         return (
           <div id="wrap">
             <div className="chat-wrap">
