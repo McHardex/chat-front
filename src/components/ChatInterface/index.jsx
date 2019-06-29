@@ -18,9 +18,10 @@ class ChatInterface extends Component {
         const { socket } = this.state;
         const { username } = this.props;
         const pathName = this.props.history.location.pathname
-        socket.emit('join', { username, pathName })
+        socket.emit('join', { username, pathName, email: ['mchardex1995@gmail.com', 'sojidaniels@gmail.com'] });
         socket.on('join', resp => {
-          this.setState({ chatHistory: this.state.chatHistory.concat({join: `${resp.username} has just joined`}) })
+          this.setState({ 
+            chatHistory: this.state.chatHistory.concat({join: `${resp.username} has just joined`}) });
         });
 
         socket.on('chat', resp => {
