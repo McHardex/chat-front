@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import io from "socket.io-client";
+import notification from '../../notification/glass_ping-Go445-1207030150.mp3';
 
 
 class ChatInterface extends Component {
@@ -10,7 +11,7 @@ class ChatInterface extends Component {
           chatHistory: [],
           userTyping: '',
           isTyping: false,
-          socket: io(`https://chaty-back.herokuapp.com/`),
+          socket: io(`https://chaty-back.herokuapp.com`),
         };
       };
     
@@ -29,9 +30,14 @@ class ChatInterface extends Component {
             chatHistory: this.state.chatHistory.concat([resp]),
             isTyping: false,
           });
+          socket.on('sound', res => {
+            const audio = new Audio(notification);
+            audio.playbackRate = 2;
+            audio.play();
+          });
         });
       }
-    
+
       handleChange = e => {
         this.setState({ [e.target.name]: e.target.value });
       }
