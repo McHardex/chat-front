@@ -54,6 +54,8 @@ em {
   bottom: 20px;
   margin: 0 auto;
   width: 95%;
+  position: sticky;
+  bottom: 3vh;
 }
 
 input {
